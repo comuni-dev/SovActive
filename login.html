@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SovActive Shop | Iniciar sesión</title>
+
+    <link rel="icon" type="image/png" href="img/logo-circular.png">
+
+    <link rel="stylesheet" href="style/styles.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+
+    <!-- =================================
+         BOTÓN GLOBAL DE TEMA
+    ================================== -->
+
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">
+
+        <i class="fa-solid fa-moon"></i>
+
+    </button>
+
+
+    <!-- =================================
+         LOGIN
+    ================================== -->
+
+    <main class="login-page">
+
+        <section class="login-card">
+
+
+            <!-- =================================
+                 ENCABEZADO
+            ================================== -->
+
+            <div class="login-header">
+
+                <div class="brand-icon">
+
+                    <img src="img/logo-circular.png" alt="Logo SovActive Shop">
+
+                </div>
+
+
+                <h1>
+                    SovActive <span>Shop</span>
+                </h1>
+
+
+                <p>
+                    Panel administrativo
+                </p>
+
+            </div>
+
+
+            <!-- =================================
+                 FORMULARIO
+            ================================== -->
+
+            <form class="login-form" id="loginForm">
+
+
+                <!-- CORREO -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Correo electrónico
+                    </label>
+
+
+                    <div class="input-box">
+
+                        <i class="fa-regular fa-envelope"></i>
+
+
+                        <input type="email" id="email" name="email" placeholder="Ingresa tu correo" autocomplete="email"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CONTRASEÑA -->
+
+                <div class="form-group">
+
+
+                    <div class="password-label">
+
+                        <label for="password">
+                            Contraseña
+                        </label>
+
+
+                        <a href="#" class="forgot-password" id="forgotPassword">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <i class="fa-solid fa-lock"></i>
+
+
+                        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña"
+                            autocomplete="current-password" required>
+
+
+                        <button type="button" class="toggle-password" id="togglePassword"
+                            aria-label="Mostrar contraseña">
+
+                            <i class="fa-regular fa-eye"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- BOTÓN LOGIN -->
+
+                <button type="submit" class="login-button">
+
+                    <span>
+                        Iniciar sesión
+                    </span>
+
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </button>
+
+
+            </form>
+
+
+
+            <!-- =================================
+                 PIE
+            ================================== -->
+
+            <div class="login-footer">
+
+                <span></span>
+
+
+                <p>
+                    Acceso exclusivo para administradores
+                </p>
+
+
+                <span></span>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
