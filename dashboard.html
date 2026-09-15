@@ -1,126 +1,489 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | SovActive Shop</title>
+    <title>SovActive Shop | Panel Administrativo</title>
+
     <link rel="icon" type="image/png" href="img/logo-circular.png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/styles.css">
+    <link rel="stylesheet" href="style/dashboard.css">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
-        body {
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            background: linear-gradient(135deg, #0f1115, #1a1d24);
-            color: #fff;
-            padding: 20px;
-            transition: background 0.4s;
-        }
-
-        body.light-theme {
-            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
-            color: #1a1d24;
-        }
-
-        .card {
-            background: #1a1d24;
-            border: 1px solid rgba(255,255,255,0.08);
-            padding: 48px 40px;
-            border-radius: 20px;
-            text-align: center;
-            max-width: 440px;
-            width: 100%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-            transition: background 0.4s, border 0.4s;
-        }
-
-        body.light-theme .card {
-            background: #ffffff;
-            border: 1px solid rgba(0,0,0,0.06);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
-        }
-
-        .card i.big {
-            font-size: 3rem;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 16px;
-        }
-
-        .card h1 { font-size: 1.5rem; margin-bottom: 8px; }
-
-        .card p {
-            color: #9ca3af;
-            font-size: 0.9rem;
-            margin-bottom: 28px;
-        }
-
-        body.light-theme .card p { color: #64748b; }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 24px;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: #fff;
-            transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-            font-family: inherit;
-        }
-
-        .btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.35);
-        }
-
-        .btn:disabled { opacity: 0.7; cursor: not-allowed; }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
 
-    <div class="card">
-        <i class="fa-solid fa-circle-check big"></i>
-        <h1>Panel administrativo</h1>
-        <p id="welcomeText">Has iniciado sesión correctamente.</p>
+<body class="dashboard-body">
 
-        <button class="btn" id="logoutBtn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Cerrar sesión</span>
-        </button>
+    <!-- =================================
+         BOTÓN GLOBAL DE TEMA
+    ================================== -->
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+
+    <!-- =================================
+         SIDEBAR / TOPBAR
+    ================================== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <img src="img/logo-circular.png" alt="Logo">
+            </div>
+            <div class="brand-text">
+                <h2>SovActive <span>Shop</span></h2>
+                <p>Panel administrativo</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active">
+                <i class="fa-solid fa-box-open"></i>
+                <span>Publicaciones</span>
+            </a>
+            <a href="#" class="nav-item" id="navCategorias">
+                <i class="fa-solid fa-tags"></i>
+                <span>Categorías</span>
+            </a>
+            <a href="#" class="nav-item" id="navEstadisticas">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Estadísticas</span>
+            </a>
+            <a href="#" class="nav-item" id="navConfig">
+                <i class="fa-solid fa-gear"></i>
+                <span>Configuración</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-chip">
+                <div class="user-avatar">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div class="user-info">
+                    <span class="user-name" id="userEmail">admin@sovactive.com</span>
+                    <span class="user-role">Administrador</span>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn" title="Cerrar sesión">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+        </div>
+    </aside>
+
+
+    <!-- =================================
+         CONTENIDO PRINCIPAL
+    ================================== -->
+    <main class="main-content">
+
+        <!-- HEADER -->
+        <header class="page-header">
+            <div class="page-title">
+                <h1>Publicaciones</h1>
+                <p>Gestiona el catálogo de productos de SovActive Shop</p>
+            </div>
+
+            <div class="page-actions">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar publicaciones...">
+                </div>
+                <button class="btn-primary" id="btnNewPost">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Nueva publicación</span>
+                </button>
+            </div>
+        </header>
+
+
+        <!-- ESTADÍSTICAS RÁPIDAS -->
+        <section class="stats-row">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #FE98B2, #ff6b8e);">
+                    <i class="fa-solid fa-box"></i>
+                </div>
+                <div class="stat-data">
+                    <h3 id="statTotal">0</h3>
+                    <p>Publicaciones</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <div class="stat-data">
+                    <h3 id="statActivas">0</h3>
+                    <p>Activas</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
+                    <i class="fa-solid fa-image"></i>
+                </div>
+                <div class="stat-data">
+                    <h3 id="statImagenes">0</h3>
+                    <p>Multimedia</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                    <i class="fa-solid fa-tags"></i>
+                </div>
+                <div class="stat-data">
+                    <h3 id="statCategorias">0</h3>
+                    <p>Categorías</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- FILTROS -->
+        <section class="filters-row">
+            <div class="filter-chips" id="filterChips">
+                <button class="chip active" data-filter="all">Todas</button>
+                <button class="chip" data-filter="active">Activas</button>
+                <button class="chip" data-filter="draft">Borradores</button>
+                <button class="chip" data-filter="featured">Destacadas</button>
+            </div>
+
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="grid" title="Vista cuadrícula">
+                    <i class="fa-solid fa-grip"></i>
+                </button>
+                <button class="view-btn" data-view="list" title="Vista lista">
+                    <i class="fa-solid fa-list"></i>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- GRID DE PUBLICACIONES -->
+        <section class="posts-grid" id="postsGrid"></section>
+
+        <!-- ESTADO VACÍO -->
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <div class="empty-icon">
+                <i class="fa-solid fa-box-open"></i>
+            </div>
+            <h3>No hay publicaciones</h3>
+            <p>Crea tu primera publicación para comenzar a vender.</p>
+            <button class="btn-primary" id="btnEmptyNew">
+                <i class="fa-solid fa-plus"></i>
+                <span>Crear publicación</span>
+            </button>
+        </div>
+
+        <!-- SKELETON LOADER -->
+        <div class="skeleton-grid" id="skeletonGrid">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </div>
+
+    </main>
+
+
+    <!-- =================================
+         MODAL: CREAR / EDITAR PUBLICACIÓN
+    ================================== -->
+    <div class="modal-overlay" id="postModal">
+        <div class="modal-container modal-large">
+
+            <div class="modal-header">
+                <div class="modal-header-info">
+                    <div class="modal-header-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                    <div>
+                        <h2 id="modalTitle">Nueva publicación</h2>
+                        <p id="modalSubtitle">Completa los datos del producto</p>
+                    </div>
+                </div>
+                <button class="modal-close" id="closePostModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form class="modal-body" id="postForm">
+
+                <!-- COLUMNA IZQUIERDA -->
+                <div class="form-col">
+
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fa-solid fa-circle-info"></i>
+                            Información básica
+                        </h3>
+
+                        <div class="form-group">
+                            <label for="postTitle">Título *</label>
+                            <input type="text" id="postTitle" placeholder="Ej: Camiseta deportiva premium" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="postCategory">Categoría *</label>
+                                <select id="postCategory" required>
+                                    <option value="">Seleccionar...</option>
+                                    <option value="Ropa">Ropa</option>
+                                    <option value="Calzado">Calzado</option>
+                                    <option value="Accesorios">Accesorios</option>
+                                    <option value="Suplementos">Suplementos</option>
+                                    <option value="Equipos">Equipos</option>
+                                    <option value="Otros">Otros</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="postPrice">Precio (COP)</label>
+                                <input type="number" id="postPrice" placeholder="0" min="0" step="100">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postDescription">Descripción</label>
+                            <textarea id="postDescription" rows="5"
+                                placeholder="Describe el producto, características, tallas, colores..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postLink">Enlace externo (opcional)</label>
+                            <input type="url" id="postLink" placeholder="https://...">
+                        </div>
+                    </div>
+
+                    <!-- ============ TALLAS ============ -->
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fa-solid fa-ruler"></i>
+                            Tallas disponibles
+                        </h3>
+
+                        <div class="sizes-wrapper">
+
+                            <div class="sizes-group">
+                                <span class="sizes-group-title">Letra</span>
+                                <div class="sizes-chips">
+                                    <button type="button" class="size-chip" data-size="XS">XS</button>
+                                    <button type="button" class="size-chip" data-size="S">S</button>
+                                    <button type="button" class="size-chip" data-size="M">M</button>
+                                    <button type="button" class="size-chip" data-size="L">L</button>
+                                    <button type="button" class="size-chip" data-size="XL">XL</button>
+                                    <button type="button" class="size-chip" data-size="XXL">XXL</button>
+                                    <button type="button" class="size-chip" data-size="XXXL">XXXL</button>
+                                </div>
+                            </div>
+
+                            <div class="sizes-group">
+                                <span class="sizes-group-title">Numérica (pantalón)</span>
+                                <div class="sizes-chips">
+                                    <button type="button" class="size-chip" data-size="28">28</button>
+                                    <button type="button" class="size-chip" data-size="30">30</button>
+                                    <button type="button" class="size-chip" data-size="32">32</button>
+                                    <button type="button" class="size-chip" data-size="34">34</button>
+                                    <button type="button" class="size-chip" data-size="36">36</button>
+                                    <button type="button" class="size-chip" data-size="38">38</button>
+                                    <button type="button" class="size-chip" data-size="40">40</button>
+                                    <button type="button" class="size-chip" data-size="42">42</button>
+                                </div>
+                            </div>
+
+                            <div class="sizes-group">
+                                <span class="sizes-group-title">Calzado (Colombia)</span>
+                                <div class="sizes-chips">
+                                    <button type="button" class="size-chip" data-size="34">34</button>
+                                    <button type="button" class="size-chip" data-size="35">35</button>
+                                    <button type="button" class="size-chip" data-size="36">36</button>
+                                    <button type="button" class="size-chip" data-size="37">37</button>
+                                    <button type="button" class="size-chip" data-size="38">38</button>
+                                    <button type="button" class="size-chip" data-size="39">39</button>
+                                    <button type="button" class="size-chip" data-size="40">40</button>
+                                    <button type="button" class="size-chip" data-size="41">41</button>
+                                    <button type="button" class="size-chip" data-size="42">42</button>
+                                    <button type="button" class="size-chip" data-size="43">43</button>
+                                    <button type="button" class="size-chip" data-size="44">44</button>
+                                    <button type="button" class="size-chip" data-size="45">45</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="sizes-selected" id="sizesSelected">
+                            <span class="sizes-empty">Ninguna talla seleccionada</span>
+                        </div>
+                    </div>
+                    <!-- ============ FIN TALLAS ============ -->
+
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fa-solid fa-sliders"></i>
+                            Estado y opciones
+                        </h3>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="postStatus">Estado</label>
+                                <select id="postStatus">
+                                    <option value="active">Activa</option>
+                                    <option value="draft">Borrador</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="postStock">Stock</label>
+                                <input type="number" id="postStock" placeholder="0" min="0">
+                            </div>
+                        </div>
+
+                        <div class="form-switch">
+                            <label class="switch">
+                                <input type="checkbox" id="postFeatured">
+                                <span class="slider"></span>
+                            </label>
+                            <span>Marcar como destacada</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- COLUMNA DERECHA -->
+                <div class="form-col">
+
+                    <div class="form-section">
+                        <h3 class="form-section-title">
+                            <i class="fa-solid fa-photo-film"></i>
+                            Multimedia (imágenes y videos)
+                        </h3>
+
+                        <div class="dropzone" id="dropzone">
+                            <input type="file" id="fileInput" accept="image/*,video/*" multiple hidden>
+                            <div class="dropzone-content">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <p><strong>Arrastra archivos aquí</strong> o haz clic para seleccionar</p>
+                                <span>Imágenes (JPG, PNG, WEBP) y videos (MP4, WEBM) — Máx. 20MB</span>
+                            </div>
+                        </div>
+
+                        <div class="upload-progress" id="uploadProgress" style="display:none;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <span id="progressText">Subiendo...</span>
+                        </div>
+
+                        <div class="media-preview" id="mediaPreview"></div>
+                    </div>
+
+                </div>
+
+            </form>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-ghost" id="cancelPost">
+                    Cancelar
+                </button>
+                <button type="submit" form="postForm" class="btn-primary" id="savePost">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Guardar publicación</span>
+                </button>
+            </div>
+
+        </div>
     </div>
 
-    <script type="module" src="js/auth.js"></script>
-    <script>
-        // Mostrar el correo del usuario logueado
-        const userEmail = localStorage.getItem("sovactive-user");
-        if (userEmail) {
-            document.getElementById("welcomeText").textContent =
-                `Bienvenido, ${userEmail}`;
-        }
 
-        // Botón cerrar sesión con spinner
-        document.getElementById("logoutBtn").addEventListener("click", async (e) => {
-            const btn = e.currentTarget;
-            const span = btn.querySelector("span");
-            const icon = btn.querySelector("i");
+    <!-- =================================
+         MODAL: VER PUBLICACIÓN (DETALLE)
+    ================================== -->
+    <div class="modal-overlay" id="viewModal">
+        <div class="modal-container modal-view">
 
-            btn.disabled = true;
-            icon.style.display = "none";
-            span.innerHTML = `<span class="sov-spinner"></span>Cerrando...`;
+            <button class="modal-close modal-close-float" id="closeViewModal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
 
-            // Pequeño delay para que se vea el spinner antes de salir
-            setTimeout(() => window.cerrarSesion(), 400);
-        });
-    </script>
+            <div class="view-gallery">
+                <div class="view-carousel" id="viewCarousel"></div>
+                <button class="carousel-btn carousel-prev" id="viewPrev">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn carousel-next" id="viewNext">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <div class="carousel-dots" id="viewDots"></div>
+            </div>
+
+            <div class="view-details">
+                <div class="view-header">
+                    <span class="badge" id="viewCategory">Categoría</span>
+                    <span class="badge badge-featured" id="viewFeatured" style="display:none;">
+                        <i class="fa-solid fa-star"></i> Destacada
+                    </span>
+                </div>
+
+                <h2 id="viewTitle">Título</h2>
+                <p class="view-price" id="viewPrice"></p>
+                <p class="view-desc" id="viewDescription"></p>
+
+                <div class="view-sizes" id="viewSizes" style="display:none;">
+                    <span class="view-sizes-label">Tallas:</span>
+                    <div class="view-sizes-list" id="viewSizesList"></div>
+                </div>
+
+                <div class="view-meta" id="viewMeta"></div>
+
+                <div class="view-actions">
+                    <a href="#" class="btn-primary" id="viewLink" target="_blank" style="display:none;">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        Ver enlace
+                    </a>
+                    <button class="btn-ghost" id="viewEditBtn">
+                        <i class="fa-solid fa-pen"></i>
+                        Editar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- =================================
+         MODAL: CONFIRMAR ELIMINACIÓN
+    ================================== -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal-container modal-small">
+            <div class="confirm-content">
+                <div class="confirm-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h2>¿Eliminar publicación?</h2>
+                <p>Esta acción no se puede deshacer. Se eliminará permanentemente del catálogo.</p>
+                <div class="confirm-actions">
+                    <button class="btn-ghost" id="cancelDelete">Cancelar</button>
+                    <button class="btn-danger" id="confirmDelete">
+                        <i class="fa-solid fa-trash"></i>
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SCRIPTS -->
+    <script src="js/script.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
 
 </body>
 </html>
