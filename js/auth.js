@@ -11,6 +11,11 @@ import {
     signOut,
     sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+    getFirestore,
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* =================================
    CONFIGURACIÓN DE FIREBASE
@@ -28,6 +33,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 /* =================================
    ESTILOS GLOBALES (toasts + modal)
@@ -423,6 +429,76 @@ window.cerrarSesion = async function () {
         showToast("No se pudo cerrar la sesión. Intenta de nuevo.", "error", 4000);
     }
 };
+
+/* =================================
+   APLICAR CONFIGURACIÓN PÚBLICA
+   (logo, nombre, eslogan, color, favicon)
+   antes de autenticarse
+================================= */
+
+async function applyPublicConfig() {
+    try {
+        const snap = await getDoc(doc(db, "config", "general"));
+        if (!snap.exists()) return;
+
+        const c = snap.data();
+
+        // Nombre de la tienda
+        const brandH1 = document.querySelector(".login-header h1");
+        if (brandH1 && c.storeName) {
+            const parts = c.storeName.trim().split(" ");
+            if (parts.length > 1) {
+                brandH1.innerHTML = `${parts.slice(0, -1).join(" ")} <span>${parts[parts.length - 1]}</span>`;
+            } else {
+                brandH1.textContent = c.storeName;
+            }
+        }
+
+        // Eslogan
+        const brandP = document.querySelector(".login-header p");
+        if (brandP && c.slogan) {
+            brandP.textContent = c.slogan;
+        }
+
+        // Logo (imagen + favicon)
+        if (c.logoUrl) {
+            document.querySelectorAll(".brand-icon img").forEach(img => {
+                img.src = c.logoUrl;
+            });
+            const favicon = document.querySelector("link[rel='icon']");
+            if (favicon) favicon.href = c.logoUrl;
+        }
+
+        // Color primario
+        if (c.primaryColor) {
+            document.documentElement.style.setProperty("--pink", c.primaryColor);
+
+            // Aplicar también a los toasts de info
+            let style = document.getElementById("sov-auth-color-style");
+            if (!style) {
+                style = document.createElement("style");
+                style.id = "sov-auth-color-style";
+                document.head.appendChild(style);
+            }
+            style.textContent = `
+                .sov-toast.sov-info .sov-toast-icon { background: linear-gradient(135deg, ${c.primaryColor}, ${c.primaryColor}); }
+                .sov-toast.sov-info .sov-toast-progress { background: ${c.primaryColor}; }
+            `;
+        }
+
+        // Título del documento
+        if (c.storeName) {
+            document.title = `${c.storeName} | Iniciar sesión`;
+        }
+
+    } catch (err) {
+        console.warn("No se pudo cargar config pública:", err.message);
+    }
+}
+
+// Ejecutar al cargar
+applyPublicConfig();
+
 
 /* =================================
    LÓGICA DE LA PÁGINA DE LOGIN

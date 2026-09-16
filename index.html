@@ -1,11 +1,491 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SovActive Shop</title>
+
+    <link rel="icon" type="image/png" href="img/logo-circular.png">
+    <link rel="stylesheet" href="style/styles.css">
+    <link rel="stylesheet" href="style/catalogo.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    
+
+<body class="catalog-body">
+
+    <!-- =================================
+         BOTÓN GLOBAL DE TEMA
+    ================================== -->
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+
+    <!-- =================================
+     HEADER
+================================== -->
+    <header class="catalog-header">
+        <div class="header-inner">
+
+            <a href="#" class="catalog-brand" id="catalogBrand">
+                <div class="brand-icon">
+                    <img src="img/logo-circular.png" alt="Logo" id="brandLogo">
+                </div>
+                <div class="brand-text">
+                    <h1 id="brandName">SovActive Shop</h1>
+                    <p id="brandSlogan">Catálogo de productos</p>
+                </div>
+            </a>
+
+            <nav class="catalog-nav">
+                <a href="#catalogo" class="nav-link">Catálogo</a>
+                <a href="#nosotros" class="nav-link">Nosotros</a>
+                <a href="#contacto" class="nav-link">Contacto</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="login.html" class="login-link" title="Acceso administrativo">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Admin</span>
+                </a>
+
+                <button type="button" class="cart-btn" id="cartBtn" aria-label="Carrito">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- =================================
+     HERO
+================================== -->
+    <section class="catalog-hero">
+
+        <div class="hero-inner">
+            <span class="hero-badge">
+                <i class="fa-solid fa-bolt"></i>
+                Atención inmediata por WhatsApp
+            </span>
+
+            <h2 class="hero-title" id="heroTitle">
+                Encuentra lo que <span>necesitas</span> hoy mismo
+            </h2>
+
+            <p class="hero-subtitle" id="heroSubtitle">
+                Respuesta rápida, productos de calidad y la mejor atención. Pide en minutos, recibe en tiempo récord.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#catalogo" class="btn-primary">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Ver catálogo</span>
+                </a>
+                <a href="#contacto" class="btn-ghost">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span>Escríbenos</span>
+                </a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <i class="fa-solid fa-bolt"></i>
+                    <div>
+                        <strong>Respuesta rápida</strong>
+                        <span>En minutos por WhatsApp</span>
+                    </div>
+                </div>
+                <div class="hero-stat">
+                    <i class="fa-solid fa-handshake"></i>
+                    <div>
+                        <strong>Atención personal</strong>
+                        <span>Te ayudamos a elegir</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-blob"></div>
+            <div class="hero-blob hero-blob-2"></div>
+        </div>
+
+    </section>
+
+
+    <!-- =================================
+         CATÁLOGO
+    ================================== -->
+    <main class="catalog-main" id="catalogo">
+
+        <div class="catalog-toolbar">
+            <div class="catalog-title-block">
+                <h2>Nuestro catálogo</h2>
+                <p id="catalogCount">Cargando productos...</p>
+            </div>
+
+            <div class="catalog-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="catalogSearch" placeholder="Buscar productos...">
+            </div>
+        </div>
+
+        <!-- =================================
+     FILTROS DE CATEGORÍA
+================================== -->
+        <div class="catalog-filters" id="catalogFilters">
+            <button class="filter-chip active" data-category="all">
+                <i class="fa-solid fa-layer-group"></i>
+                Todos
+            </button>
+            <button class="filter-chip filter-featured" data-category="__featured__">
+                <i class="fa-solid fa-star"></i>
+                Destacados
+            </button>
+            <!-- Las categorías se llenan dinámicamente -->
+        </div>
+
+
+        <!-- =================================
+     ORDEN
+================================== -->
+        <div class="filters-order">
+            <label class="filter-label" for="filterSort">
+                <i class="fa-solid fa-arrow-down-short-wide"></i>
+                Ordenar por
+            </label>
+
+            <select class="filter-select" id="filterSort">
+                <option value="recent">Más recientes</option>
+                <option value="price-asc">Precio: menor a mayor</option>
+                <option value="price-desc">Precio: mayor a menor</option>
+                <option value="name-asc">Nombre A - Z</option>
+                <option value="name-desc">Nombre Z - A</option>
+                <option value="featured">Destacados primero</option>
+            </select>
+        </div>
+
+        <section class="products-grid" id="productsGrid">
+            <!-- Se llenan dinámicamente -->
+        </section>
+
+        <!-- Loading skeleton -->
+        <div class="skeleton-grid" id="skeletonGrid">
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+            <div class="skeleton-card"></div>
+        </div>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <div class="empty-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <h3>No encontramos productos</h3>
+            <p>Prueba con otra búsqueda o cambia la categoría.</p>
+        </div>
+
+    </main>
+
+
+    <!-- =================================
+     NOSOTROS
+================================== -->
+    <section class="catalog-about" id="nosotros">
+        <div class="about-inner">
+
+            <div class="about-header">
+                <span class="about-badge">
+                    <i class="fa-solid fa-star"></i>
+                    Sobre nosotros
+                </span>
+                <h2>¿Por qué elegirnos?</h2>
+                <p>No somos la tienda más grande, pero sí la que responde más rápido y te trata como persona.</p>
+            </div>
+
+            <div class="about-features">
+
+                <div class="feature">
+                    <i class="fa-solid fa-bolt"></i>
+                    <div>
+                        <h4>Respuesta inmediata</h4>
+                        <p>Contestamos por WhatsApp en minutos, no en horas.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-handshake"></i>
+                    <div>
+                        <h4>Atención cercana</h4>
+                        <p>Te asesoramos de verdad: si algo no te sirve, te lo decimos.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <div>
+                        <h4>Productos garantizados</h4>
+                        <p>Cada artículo que ofrecemos lo probamos primero nosotros.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-tags"></i>
+                    <div>
+                        <h4>Precios honestos</h4>
+                        <p>Sin inflar precios ni esconder costos. Lo que ves es lo que pagas.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-medal"></i>
+                    <div>
+                        <h4>Trato personalizado</h4>
+                        <p>Cada cliente es único. Nos adaptamos a lo que necesitas.</p>
+                    </div>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-repeat"></i>
+                    <div>
+                        <h4>Clientes que vuelven</h4>
+                        <p>Más del 80% de nuestros clientes repiten. Eso lo dice todo.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =================================
+         FOOTER / CONTACTO
+    ================================== -->
+    <footer class="catalog-footer" id="contacto">
+        <div class="footer-inner">
+
+            <div class="footer-brand">
+                <div class="brand-icon">
+                    <img src="img/logo-circular.png" alt="Logo" id="footerLogo">
+                </div>
+                <h3 id="footerName">SovActive Shop</h3>
+                <p id="footerSlogan">Catálogo de productos</p>
+            </div>
+
+            <div class="footer-socials" id="footerSocials">
+                <!-- Se llenan dinámicamente -->
+            </div>
+
+            <div class="footer-bottom">
+                <p id="footerText">© 2026 SovActive Shop</p>
+            </div>
+
+        </div>
+    </footer>
+
+
+    <!-- =================================
+         BOTÓN FLOTANTE WHATSAPP
+    ================================== -->
+    <a href="#" class="wa-float" id="waFloat" target="_blank" style="display:none;" aria-label="Contactar por WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+
+    <!-- =================================
+         DRAWER: CARRITO
+    ================================== -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <aside class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <div>
+                <h3>Tu pedido</h3>
+                <p id="cartItemsCount">0 productos</p>
+            </div>
+            <button class="cart-close" id="cartClose" aria-label="Cerrar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="cart-body" id="cartBody">
+            <!-- Se llena dinámicamente -->
+        </div>
+
+        <div class="cart-footer" id="cartFooter">
+            <div class="cart-total-row">
+                <span>Total</span>
+                <strong id="cartTotal">$0</strong>
+            </div>
+
+            <button class="btn-whatsapp" id="btnWhatsappOrder">
+                <i class="fa-brands fa-whatsapp"></i>
+                <span>Pedir por WhatsApp</span>
+            </button>
+
+            <button class="btn-clear-cart" id="btnClearCart">
+                <i class="fa-solid fa-trash"></i>
+                <span>Vaciar carrito</span>
+            </button>
+        </div>
+    </aside>
+
+
+    <!-- =================================
+         MODAL: DETALLE DE PRODUCTO
+    ================================== -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-container modal-product">
+
+            <button class="modal-close modal-close-float" id="closeProductModal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="product-gallery">
+                <div class="product-carousel" id="productCarousel">
+                    <!-- Slides -->
+                </div>
+                <button class="carousel-btn carousel-prev" id="productPrev">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn carousel-next" id="productNext">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+                <div class="carousel-dots" id="productDots"></div>
+            </div>
+
+            <div class="product-details">
+                <div class="product-badges">
+                    <span class="badge" id="productCategory">Categoría</span>
+                    <span class="badge badge-featured" id="productFeatured" style="display:none;">
+                        <i class="fa-solid fa-star"></i> Destacado
+                    </span>
+                </div>
+
+                <h2 id="productTitle">Título</h2>
+                <p class="product-price" id="productPrice"></p>
+                <p class="product-desc" id="productDescription"></p>
+
+                <div class="product-stock" id="productStockBox" style="display:none;">
+                    <i class="fa-solid fa-box"></i>
+                    <span id="productStock">Stock: —</span>
+                </div>
+
+                <div class="product-actions">
+                    <button class="btn-primary" id="btnOpenAddToCart">
+                        <i class="fa-solid fa-cart-plus"></i>
+                        <span>Agregar al carrito</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- =================================
+         MODAL: AGREGAR AL CARRITO
+    ================================== -->
+    <div class="modal-overlay" id="addModal">
+        <div class="modal-container modal-small">
+
+            <div class="modal-header">
+                <div class="modal-header-info">
+                    <div class="modal-header-icon">
+                        <i class="fa-solid fa-cart-plus"></i>
+                    </div>
+                    <div>
+                        <h2>Agregar al pedido</h2>
+                        <p id="addModalSubtitle">—</p>
+                    </div>
+                </div>
+                <button class="modal-close" id="closeAddModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-body-single">
+
+                <div class="add-preview" id="addPreview">
+                    <!-- Miniatura + nombre + precio -->
+                </div>
+
+                <div class="form-group" id="addSizesGroup" style="display:none;">
+                    <label>Talla</label>
+                    <div class="add-sizes" id="addSizes">
+                        <!-- Chips de tallas -->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Cantidad</label>
+                    <div class="quantity-picker">
+                        <button type="button" class="qty-btn" id="qtyMinus">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <input type="number" id="qtyInput" value="1" min="1" max="99">
+                        <button type="button" class="qty-btn" id="qtyPlus">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-ghost" id="cancelAdd">Cancelar</button>
+                <button type="button" class="btn-primary" id="confirmAdd">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Agregar</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =================================
+     MODAL: CONFIRMAR VACIAR CARRITO
+================================== -->
+    <div class="modal-overlay" id="clearCartModal">
+        <div class="modal-container modal-small">
+
+            <div class="confirm-content">
+                <div class="confirm-icon confirm-icon-warning">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <h2>¿Vaciar el carrito?</h2>
+                <p>Se eliminarán todos los productos de tu pedido. Esta acción no se puede deshacer.</p>
+
+                <div class="confirm-actions">
+                    <button type="button" class="btn-ghost" id="cancelClearCart">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn-danger" id="confirmClearCart">
+                        <i class="fa-solid fa-trash"></i>
+                        Sí, vaciar
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- SCRIPTS -->
+    <script src="js/script.js"></script>
+    <script type="module" src="js/catalogo.js"></script>
+
 </body>
+
 </html>

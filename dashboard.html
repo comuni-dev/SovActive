@@ -29,7 +29,7 @@
 
 
     <!-- =================================
-         SIDEBAR / TOPBAR
+         SIDEBAR
     ================================== -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-brand">
@@ -43,19 +43,19 @@
         </div>
 
         <nav class="sidebar-nav">
-            <a href="#" class="nav-item active">
+            <a href="#" class="nav-item active" data-section="publicaciones">
                 <i class="fa-solid fa-box-open"></i>
                 <span>Publicaciones</span>
             </a>
-            <a href="#" class="nav-item" id="navCategorias">
+            <a href="#" class="nav-item" data-section="categorias">
                 <i class="fa-solid fa-tags"></i>
                 <span>Categorías</span>
             </a>
-            <a href="#" class="nav-item" id="navEstadisticas">
+            <a href="#" class="nav-item" data-section="estadisticas">
                 <i class="fa-solid fa-chart-line"></i>
                 <span>Estadísticas</span>
             </a>
-            <a href="#" class="nav-item" id="navConfig">
+            <a href="#" class="nav-item" data-section="configuracion">
                 <i class="fa-solid fa-gear"></i>
                 <span>Configuración</span>
             </a>
@@ -79,11 +79,10 @@
 
 
     <!-- =================================
-         CONTENIDO PRINCIPAL
+         SECCIÓN: PUBLICACIONES
     ================================== -->
-    <main class="main-content">
+    <main class="main-content" data-section-content="publicaciones">
 
-        <!-- HEADER -->
         <header class="page-header">
             <div class="page-title">
                 <h1>Publicaciones</h1>
@@ -102,8 +101,6 @@
             </div>
         </header>
 
-
-        <!-- ESTADÍSTICAS RÁPIDAS -->
         <section class="stats-row">
             <div class="stat-card">
                 <div class="stat-icon" style="background: linear-gradient(135deg, #FE98B2, #ff6b8e);">
@@ -146,8 +143,6 @@
             </div>
         </section>
 
-
-        <!-- FILTROS -->
         <section class="filters-row">
             <div class="filter-chips" id="filterChips">
                 <button class="chip active" data-filter="all">Todas</button>
@@ -166,11 +161,8 @@
             </div>
         </section>
 
-
-        <!-- GRID DE PUBLICACIONES -->
         <section class="posts-grid" id="postsGrid"></section>
 
-        <!-- ESTADO VACÍO -->
         <div class="empty-state" id="emptyState" style="display:none;">
             <div class="empty-icon">
                 <i class="fa-solid fa-box-open"></i>
@@ -183,12 +175,385 @@
             </button>
         </div>
 
-        <!-- SKELETON LOADER -->
         <div class="skeleton-grid" id="skeletonGrid">
             <div class="skeleton-card"></div>
             <div class="skeleton-card"></div>
             <div class="skeleton-card"></div>
         </div>
+
+    </main>
+
+
+    <!-- =================================
+         SECCIÓN: CATEGORÍAS
+    ================================== -->
+    <main class="main-content" data-section-content="categorias" style="display:none;">
+
+        <header class="page-header">
+            <div class="page-title">
+                <h1>Categorías</h1>
+                <p>Organiza los productos por tipo o familia</p>
+            </div>
+
+            <div class="page-actions">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchCategory" placeholder="Buscar categorías...">
+                </div>
+                <button class="btn-primary" id="btnNewCategory">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Nueva categoría</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="categories-grid" id="categoriesGrid"></section>
+
+        <div class="empty-state" id="emptyCategories" style="display:none;">
+            <div class="empty-icon">
+                <i class="fa-solid fa-tags"></i>
+            </div>
+            <h3>No hay categorías</h3>
+            <p>Crea tu primera categoría para organizar tu catálogo.</p>
+            <button class="btn-primary" id="btnEmptyCategory">
+                <i class="fa-solid fa-plus"></i>
+                <span>Crear categoría</span>
+            </button>
+        </div>
+
+    </main>
+
+
+    <!-- =================================
+         SECCIÓN: ESTADÍSTICAS
+    ================================== -->
+    <main class="main-content" data-section-content="estadisticas" style="display:none;">
+
+        <header class="page-header">
+            <div class="page-title">
+                <h1>Estadísticas</h1>
+                <p>Métricas y análisis de tu catálogo</p>
+            </div>
+
+            <div class="page-actions">
+                <button class="btn-ghost" id="btnRefreshStats">
+                    <i class="fa-solid fa-rotate"></i>
+                    <span>Actualizar</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="stats-row stats-row-extra">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #FE98B2, #ff6b8e);">
+                    <i class="fa-solid fa-sack-dollar"></i>
+                </div>
+                <div class="stat-data">
+                    <h3 id="statValorTotal">$0</h3>
+                    <p>Valor inventario</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+                <div class="stat-data">
+                    <h3 id="statPrecioPromedio">$0</h3>
+                    <p>Precio promedio</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="stat-data">
+                    <h3 id="statSinStock">0</h3>
+                    <p>Sin stock</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <div class="stat-data">
+                    <h3 id="statTopCategoria">—</h3>
+                    <p>Categoría top</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="charts-grid">
+            <div class="chart-card chart-card-wide">
+                <div class="chart-card-header">
+                    <div>
+                        <h3>Publicaciones por categoría</h3>
+                        <p>Distribución del catálogo</p>
+                    </div>
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chartPorCategoria"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <div>
+                        <h3>Estado del catálogo</h3>
+                        <p>Activas / Borradores / Destacadas</p>
+                    </div>
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chartEstados"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-card-header">
+                    <div>
+                        <h3>Top stock</h3>
+                        <p>5 productos con más unidades</p>
+                    </div>
+                    <i class="fa-solid fa-chart-column"></i>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chartStock"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card chart-card-wide">
+                <div class="chart-card-header">
+                    <div>
+                        <h3>Valor de inventario por categoría</h3>
+                        <p>Precio × Stock sumado</p>
+                    </div>
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="chartValor"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="low-stock-card">
+            <div class="chart-card-header">
+                <div>
+                    <h3>Productos con stock bajo</h3>
+                    <p>Menos de 5 unidades disponibles</p>
+                </div>
+                <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+            <div class="low-stock-list" id="lowStockList"></div>
+        </section>
+
+    </main>
+
+
+    <!-- =================================
+         SECCIÓN: CONFIGURACIÓN
+    ================================== -->
+    <main class="main-content" data-section-content="configuracion" style="display:none;">
+
+        <header class="page-header">
+            <div class="page-title">
+                <h1>Configuración</h1>
+                <p>Ajustes generales de SovActive Shop</p>
+            </div>
+
+            <div class="page-actions">
+                <button class="btn-ghost" id="btnResetConfig">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>Restaurar</span>
+                </button>
+                <button class="btn-primary" id="btnSaveConfig">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Guardar cambios</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="config-grid">
+
+            <div class="config-card">
+                <div class="config-card-header">
+                    <div class="config-card-icon" style="background: linear-gradient(135deg, #FE98B2, #ff6b8e);">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                    <div>
+                        <h3>Identidad de la tienda</h3>
+                        <p>Nombre, eslogan y logo</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgStoreName">Nombre de la tienda</label>
+                    <input type="text" id="cfgStoreName" placeholder="SovActive Shop" maxlength="60">
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgSlogan">Eslogan</label>
+                    <input type="text" id="cfgSlogan" placeholder="Ropa y accesorios deportivos" maxlength="120">
+                </div>
+
+                <div class="form-group">
+                    <label>Logo de la tienda</label>
+
+                    <div class="logo-dropzone" id="logoDropzone">
+                        <input type="file" id="logoFileInput" accept="image/*" hidden>
+
+                        <div class="logo-dropzone-content">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <p><strong>Sube tu logo</strong> o arrástralo aquí</p>
+                            <span>PNG, JPG o WEBP — Máx. 5MB</span>
+                        </div>
+
+                        <div class="logo-preview-wrapper" id="logoPreviewWrapper" style="display:none;">
+                            <div class="config-logo-box">
+                                <img id="cfgLogoPreview" src="img/logo-circular.png" alt="Logo">
+                            </div>
+                            <button type="button" class="logo-remove-btn" id="logoRemoveBtn" title="Quitar logo">
+                                <i class="fa-solid fa-xmark"></i> Quitar logo
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="upload-progress" id="logoUploadProgress" style="display:none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="logoProgressFill"></div>
+                        </div>
+                        <span id="logoProgressText">Subiendo logo...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="config-card">
+                <div class="config-card-header">
+                    <div class="config-card-icon" style="background: linear-gradient(135deg, #3b82f6, #2563eb);">
+                        <i class="fa-solid fa-address-book"></i>
+                    </div>
+                    <div>
+                        <h3>Contacto y redes sociales</h3>
+                        <p>Canales de comunicación</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgWhatsapp">
+                        <i class="fa-brands fa-whatsapp" style="color:#25D366"></i>
+                        WhatsApp
+                    </label>
+                    <input type="text" id="cfgWhatsapp" placeholder="+57 300 1234567">
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgEmail">
+                        <i class="fa-solid fa-envelope" style="color:#FE98B2"></i>
+                        Correo de contacto
+                    </label>
+                    <input type="email" id="cfgEmail" placeholder="contacto@sovactive.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgInstagram">
+                        <i class="fa-brands fa-instagram" style="color:#E1306C"></i>
+                        Instagram
+                    </label>
+                    <input type="text" id="cfgInstagram" placeholder="@sovactive">
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgFacebook">
+                        <i class="fa-brands fa-facebook" style="color:#1877F2"></i>
+                        Facebook
+                    </label>
+                    <input type="text" id="cfgFacebook" placeholder="SovActive Shop">
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgTiktok">
+                        <i class="fa-brands fa-tiktok"></i>
+                        TikTok
+                    </label>
+                    <input type="text" id="cfgTiktok" placeholder="@sovactive">
+                </div>
+            </div>
+
+            <div class="config-card">
+                <div class="config-card-header">
+                    <div class="config-card-icon" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <div>
+                        <h3>Preferencias</h3>
+                        <p>Moneda, color y opciones generales</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgCurrency">Moneda</label>
+                    <select id="cfgCurrency">
+                        <option value="COP">COP — Peso colombiano</option>
+                        <option value="USD">USD — Dólar</option>
+                        <option value="MXN">MXN — Peso mexicano</option>
+                        <option value="ARS">ARS — Peso argentino</option>
+                        <option value="EUR">EUR — Euro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgPrimaryColor">Color primario</label>
+                    <div class="color-input-wrapper">
+                        <input type="color" id="cfgPrimaryColor" value="#FE98B2">
+                        <input type="text" id="cfgPrimaryColorHex" value="#FE98B2" maxlength="7"
+                            class="color-hex-input">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cfgFooterText">Texto del footer</label>
+                    <input type="text" id="cfgFooterText" placeholder="© 2026 SovActive Shop" maxlength="80">
+                </div>
+
+                <div class="form-switch">
+                    <label class="switch">
+                        <input type="checkbox" id="cfgShowStockPublic">
+                        <span class="slider"></span>
+                    </label>
+                    <span>Mostrar stock en el catálogo público</span>
+                </div>
+
+                <div class="form-switch">
+                    <label class="switch">
+                        <input type="checkbox" id="cfgShowPricePublic" checked>
+                        <span class="slider"></span>
+                    </label>
+                    <span>Mostrar precios en el catálogo público</span>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="admin-info-card">
+            <div class="admin-info-header">
+                <div class="admin-avatar">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div>
+                    <h3>Cuenta de administrador</h3>
+                    <p id="adminInfoEmail">—</p>
+                </div>
+            </div>
+            <div class="admin-info-actions">
+                <button class="btn-ghost" id="btnChangePassword">
+                    <i class="fa-solid fa-key"></i>
+                    <span>Cambiar contraseña</span>
+                </button>
+            </div>
+        </section>
 
     </main>
 
@@ -225,9 +590,20 @@
                             Información básica
                         </h3>
 
-                        <div class="form-group">
-                            <label for="postTitle">Título *</label>
-                            <input type="text" id="postTitle" placeholder="Ej: Camiseta deportiva premium" required>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="postTitle">Título *</label>
+                                <input type="text" id="postTitle" placeholder="Ej: Camiseta deportiva premium" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="postReference">Referencia (SKU)</label>
+                                <div class="reference-input-wrapper">
+                                    <input type="text" id="postReference" placeholder="Ej: CAM-001" maxlength="30"
+                                        autocomplete="off">
+                                    <span class="reference-status" id="referenceStatus"></span>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-row">
@@ -235,12 +611,6 @@
                                 <label for="postCategory">Categoría *</label>
                                 <select id="postCategory" required>
                                     <option value="">Seleccionar...</option>
-                                    <option value="Ropa">Ropa</option>
-                                    <option value="Calzado">Calzado</option>
-                                    <option value="Accesorios">Accesorios</option>
-                                    <option value="Suplementos">Suplementos</option>
-                                    <option value="Equipos">Equipos</option>
-                                    <option value="Otros">Otros</option>
                                 </select>
                             </div>
 
@@ -262,7 +632,6 @@
                         </div>
                     </div>
 
-                    <!-- ============ TALLAS ============ -->
                     <div class="form-section">
                         <h3 class="form-section-title">
                             <i class="fa-solid fa-ruler"></i>
@@ -270,7 +639,6 @@
                         </h3>
 
                         <div class="sizes-wrapper">
-
                             <div class="sizes-group">
                                 <span class="sizes-group-title">Letra</span>
                                 <div class="sizes-chips">
@@ -315,14 +683,12 @@
                                     <button type="button" class="size-chip" data-size="45">45</button>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="sizes-selected" id="sizesSelected">
                             <span class="sizes-empty">Ninguna talla seleccionada</span>
                         </div>
                     </div>
-                    <!-- ============ FIN TALLAS ============ -->
 
                     <div class="form-section">
                         <h3 class="form-section-title">
@@ -389,9 +755,7 @@
             </form>
 
             <div class="modal-footer">
-                <button type="button" class="btn-ghost" id="cancelPost">
-                    Cancelar
-                </button>
+                <button type="button" class="btn-ghost" id="cancelPost">Cancelar</button>
                 <button type="submit" form="postForm" class="btn-primary" id="savePost">
                     <i class="fa-solid fa-floppy-disk"></i>
                     <span>Guardar publicación</span>
@@ -403,7 +767,85 @@
 
 
     <!-- =================================
-         MODAL: VER PUBLICACIÓN (DETALLE)
+         MODAL: CREAR / EDITAR CATEGORÍA
+    ================================== -->
+    <div class="modal-overlay" id="categoryModal">
+        <div class="modal-container modal-category">
+
+            <div class="modal-header">
+                <div class="modal-header-info">
+                    <div class="modal-header-icon">
+                        <i class="fa-solid fa-tags"></i>
+                    </div>
+                    <div>
+                        <h2 id="categoryModalTitle">Nueva categoría</h2>
+                        <p id="categoryModalSubtitle">Crea una categoría para organizar tus productos</p>
+                    </div>
+                </div>
+                <button class="modal-close" id="closeCategoryModal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form class="modal-body modal-body-single" id="categoryForm">
+
+                <div class="form-group">
+                    <label for="categoryName">Nombre *</label>
+                    <input type="text" id="categoryName" placeholder="Ej: Ropa deportiva" required maxlength="40">
+                </div>
+
+                <div class="form-group">
+                    <label for="categoryDescription">Descripción (opcional)</label>
+                    <input type="text" id="categoryDescription" placeholder="Breve descripción" maxlength="120">
+                </div>
+
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fa-solid fa-icons"></i>
+                        Ícono
+                    </h3>
+
+                    <div class="icon-picker" id="iconPicker"></div>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="form-section-title">
+                        <i class="fa-solid fa-palette"></i>
+                        Color
+                    </h3>
+
+                    <div class="color-picker" id="colorPicker"></div>
+                </div>
+
+                <div class="category-preview">
+                    <span class="category-preview-label">Vista previa</span>
+                    <div class="category-preview-card" id="categoryPreview">
+                        <div class="category-preview-icon" id="categoryPreviewIcon">
+                            <i class="fa-solid fa-tag"></i>
+                        </div>
+                        <div class="category-preview-text">
+                            <h4 id="categoryPreviewName">Nombre de categoría</h4>
+                            <p id="categoryPreviewDesc">Descripción de la categoría</p>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-ghost" id="cancelCategory">Cancelar</button>
+                <button type="submit" form="categoryForm" class="btn-primary" id="saveCategory">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    <span>Guardar categoría</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- =================================
+         MODAL: VER PUBLICACIÓN
     ================================== -->
     <div class="modal-overlay" id="viewModal">
         <div class="modal-container modal-view">
@@ -432,6 +874,7 @@
                 </div>
 
                 <h2 id="viewTitle">Título</h2>
+                <div class="view-reference" id="viewReference" style="display:none;"></div>
                 <p class="view-price" id="viewPrice"></p>
                 <p class="view-desc" id="viewDescription"></p>
 
@@ -459,7 +902,7 @@
 
 
     <!-- =================================
-         MODAL: CONFIRMAR ELIMINACIÓN
+         MODAL: ELIMINAR
     ================================== -->
     <div class="modal-overlay" id="deleteModal">
         <div class="modal-container modal-small">
@@ -467,8 +910,8 @@
                 <div class="confirm-icon">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
-                <h2>¿Eliminar publicación?</h2>
-                <p>Esta acción no se puede deshacer. Se eliminará permanentemente del catálogo.</p>
+                <h2 id="deleteTitle">¿Eliminar?</h2>
+                <p id="deleteMessage">Esta acción no se puede deshacer.</p>
                 <div class="confirm-actions">
                     <button class="btn-ghost" id="cancelDelete">Cancelar</button>
                     <button class="btn-danger" id="confirmDelete">
@@ -486,4 +929,5 @@
     <script type="module" src="js/dashboard.js"></script>
 
 </body>
+
 </html>
