@@ -43,6 +43,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         updateThemeIcon();
+
+        /* =================================
+           OCULTAR TOGGLE AL HACER SCROLL
+        ================================= */
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener("scroll", () => {
+            const currentScrollY = window.scrollY;
+
+            // Si bajamos más de 100px y estamos bajando → ocultar
+            if (currentScrollY > 100 && currentScrollY > lastScrollY) {
+                themeToggle.classList.add("hidden");
+            } else {
+                themeToggle.classList.remove("hidden");
+            }
+
+            lastScrollY = currentScrollY;
+        }, { passive: true });
     }
 
     /* =================================

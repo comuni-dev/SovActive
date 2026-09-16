@@ -748,6 +748,50 @@ function clearCart() {
     saveCart();
 }
 
+/* =================================
+   MENÚ HAMBURGUESA (móvil)
+================================= */
+const menuToggle = document.getElementById("menuToggle");
+const catalogNav = document.querySelector(".catalog-nav");
+
+menuToggle?.addEventListener("click", () => {
+    catalogNav?.classList.toggle("open");
+
+    // Cambiar ícono
+    const icon = menuToggle.querySelector("i");
+    if (catalogNav?.classList.contains("open")) {
+        icon.classList.remove("fa-bars");
+        icon.classList.add("fa-xmark");
+    } else {
+        icon.classList.remove("fa-xmark");
+        icon.classList.add("fa-bars");
+    }
+});
+
+// Cerrar al hacer clic en un link
+document.querySelectorAll(".catalog-nav .nav-link").forEach(link => {
+    link.addEventListener("click", () => {
+        catalogNav?.classList.remove("open");
+        const icon = menuToggle?.querySelector("i");
+        if (icon) {
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+        }
+    });
+});
+
+// Cerrar al hacer scroll
+window.addEventListener("scroll", () => {
+    if (catalogNav?.classList.contains("open")) {
+        catalogNav.classList.remove("open");
+        const icon = menuToggle?.querySelector("i");
+        if (icon) {
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+        }
+    }
+}, { passive: true });
+
 function updateCartUI() {
     const count = cart.reduce((a, i) => a + i.qty, 0);
     const countEl = document.getElementById("cartCount");

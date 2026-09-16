@@ -902,12 +902,58 @@ body {
     transform: translateX(-3px);
 }
 
-/* Responsive */
+/* =================================
+   THEME TOGGLE — POSICIÓN SEGÚN CONTEXTO
+================================= */
+
+/* En el catálogo público, en móvil va arriba a la IZQUIERDA
+   para no chocar con el carrito y el login-link */
+@media (max-width: 860px) {
+    body.catalog-body .theme-toggle {
+        top: 12px;
+        left: 12px;
+        right: auto;
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+}
+
+/* En el dashboard, en móvil va ABAJO a la DERECHA
+   para no chocar con el sidebar ni los botones */
+@media (max-width: 900px) {
+    body.dashboard-body .theme-toggle {
+        top: auto;
+        bottom: 22px;
+        right: 22px;
+        width: 48px;
+        height: 48px;
+        font-size: 16px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+}
+
+/* En el login en móvil, se queda arriba a la derecha
+   (no hay nada más, no molesta) */
 @media (max-width: 520px) {
-    .back-home-float {
+    body:not(.catalog-body):not(.dashboard-body) .theme-toggle {
         top: 16px;
-        left: 16px;
+        right: 16px;
         width: 42px;
         height: 42px;
     }
+}
+
+
+/* =================================
+   THEME TOGGLE — ocultar al hacer scroll
+================================= */
+.theme-toggle {
+    transition: all 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.theme-toggle.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-30px) scale(0.9);
 }

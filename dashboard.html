@@ -21,13 +21,21 @@
 <body class="dashboard-body">
 
     <!-- =================================
-         BOTÓN GLOBAL DE TEMA
-    ================================== -->
+     BOTÓN HAMBURGUESA (móvil)
+================================== -->
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- =================================
+     BOTÓN GLOBAL DE TEMA
+================================== -->
     <button type="button" class="theme-toggle" id="themeToggle" aria-label="Cambiar tema" title="Cambiar tema">
         <i class="fa-solid fa-moon"></i>
     </button>
 
 
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <!-- =================================
          SIDEBAR
     ================================== -->

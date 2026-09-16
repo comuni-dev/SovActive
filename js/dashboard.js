@@ -1908,6 +1908,53 @@ function applyPrimaryColorToToasts(color) {
     `;
 }
 
+
+/* =================================
+   SIDEBAR MÓVIL (hamburguesa)
+================================= */
+const sidebarToggle = document.getElementById("sidebarToggle");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+const sidebarEl = document.getElementById("sidebar");
+
+function openSidebar() {
+    sidebarEl?.classList.add("open");
+    sidebarOverlay?.classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeSidebar() {
+    sidebarEl?.classList.remove("open");
+    sidebarOverlay?.classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+sidebarToggle?.addEventListener("click", () => {
+    if (sidebarEl?.classList.contains("open")) {
+        closeSidebar();
+    } else {
+        openSidebar();
+    }
+});
+
+sidebarOverlay?.addEventListener("click", closeSidebar);
+
+// Cerrar al hacer clic en un nav-item (móvil)
+document.querySelectorAll(".nav-item[data-section]").forEach(item => {
+    item.addEventListener("click", () => {
+        if (window.innerWidth <= 900) {
+            closeSidebar();
+        }
+    });
+});
+
+// Cerrar con Escape
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && sidebarEl?.classList.contains("open")) {
+        closeSidebar();
+    }
+});
+
+
 function applyConfigToUI() {
     const c = currentConfig;
 
